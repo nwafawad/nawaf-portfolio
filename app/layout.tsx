@@ -9,11 +9,15 @@ const geist = Geist({
 
 const description =
   'Nawaf Ahmed is a product designer focused on clear systems, useful interactions, and work that is ready to ship.';
+const siteUrl = new URL(
+  'https://nawaf-ahmed-portfolio.n-ahmed359377.chatgpt.site',
+);
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000',
-  ),
+  metadataBase: siteUrl,
+  alternates: {
+    canonical: '/',
+  },
   title: {
     default: 'Nawaf Ahmed — Product Designer',
     template: '%s — Nawaf Ahmed',
