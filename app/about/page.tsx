@@ -33,6 +33,54 @@ const experience = [
   },
 ];
 
+const foundationCourses = [
+  {
+    number: '01',
+    title: 'Learning Processes',
+    term: 'Year 1 · Trimester 1 · 20 credits',
+    summary:
+      'Developed deliberate approaches to curiosity, self-directed learning, research, source evaluation, and breaking ambitious goals into manageable steps.',
+    practice:
+      'I use specification-first research and incremental milestones to learn unfamiliar systems such as service workers, IndexedDB, Docker networking, and asynchronous API lifecycles.',
+  },
+  {
+    number: '02',
+    title: 'Reflective Thinking',
+    term: 'Year 1 · Trimester 1 · 20 credits',
+    summary:
+      'Built the habit of examining decisions, behavior, and outcomes so that experience becomes a repeatable source of better judgment.',
+    practice:
+      'That shows up in blameless root-cause analysis, architectural decision records, and code reviews that test assumptions and edge cases—not only syntax.',
+  },
+  {
+    number: '03',
+    title: 'Self Leadership & Team Dynamics',
+    term: 'Year 1 · Trimester 2 · 20 credits',
+    summary:
+      'Explored self-awareness, empathy, feedback, collaboration, conflict management, proactivity, ethics, and the discipline of leading oneself before leading others.',
+    practice:
+      'I bring that into transparent Git workflows, constructive peer feedback, shared documentation, and calm ownership when a migration, environment, or deployment fails.',
+  },
+  {
+    number: '04',
+    title: 'Responsible Enterprise',
+    term: 'Year 1 · Trimester 3 · 20 credits',
+    summary:
+      'Connected entrepreneurship with design thinking, systems thinking, and an ethical responsibility to consider equity, environmental cost, and long-term consequences.',
+    practice:
+      'It shaped RECYX as an auditable circular-economy ledger and Asala Hub as a resource-conscious product designed around bandwidth, battery life, and affordable access.',
+  },
+  {
+    number: '05',
+    title: 'Communicating for Impact',
+    term: 'Year 2 · Trimester 1 · 20 credits',
+    summary:
+      'Strengthened critical thinking and the ability to organize, write, present, and adapt complex ideas for academic, professional, and public audiences.',
+    practice:
+      'I apply it through precise API contracts, useful READMEs, architectural documentation, and explanations that connect technical trade-offs to product and business outcomes.',
+  },
+];
+
 export default function AboutPage() {
   return (
     <>
@@ -73,6 +121,38 @@ export default function AboutPage() {
           <div>
             <span>Academic progress</span>
             <strong>320 / 480 credits</strong>
+          </div>
+        </section>
+
+        <section
+          className="foundation-courses shell"
+          aria-labelledby="foundation-title"
+        >
+          <header className="foundation-heading">
+            <p className="eyebrow">ALU foundation courses · 100 credits</p>
+            <h2 id="foundation-title">How I learn, lead, and build.</h2>
+            <p>
+              These courses developed the human and systems-thinking practices
+              behind my technical work. Each one has a direct expression in how
+              I research, make decisions, collaborate, and communicate.
+            </p>
+          </header>
+
+          <div className="foundation-list">
+            {foundationCourses.map((course) => (
+              <article key={course.number}>
+                <span className="foundation-number">{course.number}</span>
+                <div className="foundation-name">
+                  <p>{course.term}</p>
+                  <h3>{course.title}</h3>
+                </div>
+                <p>{course.summary}</p>
+                <p className="foundation-practice">
+                  <strong>In practice</strong>
+                  {course.practice}
+                </p>
+              </article>
+            ))}
           </div>
         </section>
 
