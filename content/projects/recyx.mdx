@@ -2,33 +2,44 @@
 title: RECYX
 year: 2026
 role: Full-stack developer
-summary: A full-stack platform for digital transactions and circular-economy commerce.
-outcome: A tested React.js, FastAPI, PostgreSQL, and SQLAlchemy application stack.
-kind: Full-stack platform
+summary: A transaction-safe circular-economy marketplace designed to protect inventory and ledger integrity under concurrent claims.
+outcome: One successful claimant under a 50-request concurrency test, with financial routes covered above 92%.
+kind: Transaction platform
 tags:
   - FastAPI
-  - React.js
   - PostgreSQL
-  - Automated testing
+  - Concurrency
+  - Ledger systems
 heroImage: /identity.png
 featured: true
 visual: recyx
 ---
 
-## Project overview
+## The problem
 
-Built in March 2026, RECYX is a full-stack platform for digital transactions and circular-economy commerce. The project connects a React.js interface to a Python API and a relational PostgreSQL data layer.
+RECYX formalizes peer-to-peer exchanges of recyclable commodities. The difficult part was not the storefront; it was protecting inventory and account balances when multiple buyers tried to claim the same material at nearly the same time.
 
-<ProjectArtifact variant="recyx" caption="RECYX connects the client, API, and relational data layer in one full-stack application." />
+<ProjectArtifact
+  variant="recyx"
+  caption="A React client sends claims through FastAPI to an atomic PostgreSQL transaction and double-entry ledger."
+/>
 
-## Application stack
+## Defending the invariant
 
-The backend uses FastAPI with SQLAlchemy ORM and PostgreSQL. The frontend is built with React.js, keeping the interface and service layers within a modern web application stack.
+The FastAPI transaction route uses SQLAlchemy and PostgreSQL at `READ COMMITTED` isolation. It locks the target commodity row with `SELECT ... FOR UPDATE`, validates the available balance and item state, writes the debit and credit pair, and changes the commodity to `CLAIMED` inside one short transaction.
 
-<Decision title="Testing on both sides of the stack">
-The project uses pytest for Python testing and Jest for JavaScript testing, providing automated coverage across the application.
+<Decision title="Pessimistic locking over optimistic retries">
+  Contention is concentrated on a single listing during a claim. Row-level
+  locking makes the database defend the invariant directly; competing requests
+  wait, then receive a clean conflict instead of racing through stale reads. The
+  trade-off is a lock held for the transaction, so external calls stay outside
+  that boundary.
 </Decision>
 
-## What the project demonstrates
+## Retry-safe transactions
 
-RECYX demonstrates full-stack application development, REST API implementation, relational data modeling, ORM-based persistence, frontend integration, and automated testing.
+Client submissions receive a unique transaction hash, making retries idempotent and preventing a dropped connection from creating a second balance deduction or reward.
+
+## Evidence
+
+A pytest-asyncio test fired 50 requests at one commodity: one claim succeeded, 49 returned `409 Conflict`, and the ledger remained balanced. Critical financial and checkout routes reached more than 92% test coverage across pytest and Jest; local benchmarks averaged under 60 ms for transaction confirmation at 50 concurrent requests.

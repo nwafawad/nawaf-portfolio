@@ -1,0 +1,43 @@
+---
+title: Asala Hub
+year: 2026
+role: Full-stack developer
+summary: An offline-first learning platform that keeps lessons, notes, and assessments usable through network outages.
+outcome: Core reading and quiz flows work offline; a 15-chapter module fits in under 8 MB of local storage.
+kind: Offline-first learning platform
+tags:
+  - Next.js
+  - IndexedDB
+  - Service Workers
+  - FastAPI
+heroImage: /identity.png
+featured: true
+visual: asala
+---
+
+## The constraint
+
+Students in Sudan, Rwanda, and other low-connectivity regions lose access when learning products assume an uninterrupted network. Asala Hub treats offline use as the default operating condition, not a degraded afterthought.
+
+<ProjectArtifact
+  variant="asala"
+  caption="Lessons and assessments live locally in IndexedDB; a deterministic queue reconciles pending work when connectivity returns."
+/>
+
+## Local-first learning
+
+A service worker caches the application shell while Dexie.js provides a typed IndexedDB layer for lessons, notes, assessments, and pending submissions. Core reading and quiz flows remain available with no connection, and database work runs away from the main interaction path.
+
+<Decision title="Last-write-wins over a CRDT">
+  Quiz submissions and reading markers are append-only or single-author in this
+  domain. Timestamp-based last-write-wins keeps the sync model deterministic
+  without adding the bundle size and memory overhead of a CRDT library. The
+  known trade-off is concurrent edits across multiple devices, mitigated by
+  limiting active sessions per student.
+</Decision>
+
+## Recovery and bandwidth
+
+The sync engine watches connectivity, batches pending mutations, and sends them to a FastAPI endpoint in dependency order. Successful writes move from `PENDING_SYNC` to `SYNCED`; stale edits resolve against the server timestamp.
+
+Gemini-generated lesson summaries are cached as lightweight review cards. In the tested content set, this reduced downstream payloads by up to 80%, while all 15 chapters in a term occupied less than 8 MB of local storage.

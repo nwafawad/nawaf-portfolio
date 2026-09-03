@@ -50,7 +50,11 @@ html {
 body {
   margin: 0;
   background:
-    radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.58), transparent 34rem),
+    radial-gradient(
+      circle at 20% 0%,
+      rgba(255, 255, 255, 0.58),
+      transparent 34rem
+    ),
     var(--paper);
   color: var(--ink);
   font-family: var(--font-geist), Arial, Helvetica, sans-serif;
@@ -626,7 +630,8 @@ a {
 
 .recyx-ui,
 .momentum-ui,
-.elevanda-ui {
+.elevanda-ui,
+.asala-ui {
   width: min(82%, 430px);
   padding: 22px;
   border: 1px solid rgba(255, 255, 255, 0.75);
@@ -637,7 +642,8 @@ a {
 
 .compact .recyx-ui,
 .compact .momentum-ui,
-.compact .elevanda-ui {
+.compact .elevanda-ui,
+.compact .asala-ui {
   padding: 14px;
   box-shadow: 8px 8px 0 rgba(23, 23, 20, 0.28);
 }
@@ -800,6 +806,75 @@ a {
   color: var(--ink-soft);
   font-size: 0.55rem;
   font-weight: 680;
+  text-transform: uppercase;
+}
+
+.visual-asala {
+  display: grid;
+  place-items: center;
+  background: #14695f;
+}
+
+.asala-ui {
+  width: min(82%, 430px);
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  background: var(--paper-light);
+  box-shadow: 12px 12px 0 rgba(23, 23, 20, 0.28);
+  color: var(--ink);
+}
+
+.asala-status {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 0 18px;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.asala-status strong {
+  color: #14695f;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  letter-spacing: -0.045em;
+}
+
+.asala-status span {
+  color: var(--ink-soft);
+  font-size: 0.59rem;
+  font-weight: 680;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.asala-queue {
+  padding-block: 8px;
+}
+
+.asala-queue div {
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.61rem;
+}
+
+.asala-queue strong {
+  color: var(--red);
+  font-size: 0.53rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.asala-ui > p {
+  margin: 11px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.56rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
@@ -1221,13 +1296,17 @@ a {
 
 .case-visual-shell .recyx-ui,
 .case-visual-shell .momentum-ui,
-.case-visual-shell .elevanda-ui {
+.case-visual-shell .elevanda-ui,
+.case-visual-shell .asala-ui {
   transform: scale(1.12);
 }
 
 .case-body {
   display: grid;
-  grid-template-columns: minmax(180px, 0.55fr) minmax(0, 1fr) minmax(220px, 0.5fr);
+  grid-template-columns: minmax(180px, 0.55fr) minmax(0, 1fr) minmax(
+      220px,
+      0.5fr
+    );
   column-gap: clamp(40px, 7vw, 110px);
   padding-block: clamp(100px, 13vw, 180px);
 }
@@ -1261,6 +1340,18 @@ a {
   color: #3f3d37;
   font-size: clamp(1rem, 1.35vw, 1.16rem);
   line-height: 1.72;
+}
+
+.case-body code {
+  padding: 0.08em 0.28em;
+  border: 1px solid var(--line);
+  background: var(--paper-light);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.84em;
+}
+
+.decision-callout p {
+  margin: 0 0 20px;
 }
 
 .case-body > .case-artifact {
@@ -1433,7 +1524,10 @@ a {
   }
 
   .case-body {
-    grid-template-columns: minmax(110px, 0.35fr) minmax(0, 1fr) minmax(80px, 0.2fr);
+    grid-template-columns: minmax(110px, 0.35fr) minmax(0, 1fr) minmax(
+        80px,
+        0.2fr
+      );
   }
 }
 

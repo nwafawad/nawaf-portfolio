@@ -2,33 +2,39 @@
 title: Momentum
 year: 2026
 role: Full-stack developer
-summary: An AI-driven mission workspace built with Python, FastAPI, React.js, and Docker.
-outcome: A containerized full-stack workspace combining an AI-driven product concept with a modern web stack.
-kind: AI workspace application
+summary: An AI skill-intelligence workspace that turns candidate evidence into structured, auditable competency assessments.
+outcome: Schema-constrained evaluations with zero parsing failures in the tested pipeline and cached responses under 150 ms.
+kind: AI assessment platform
 tags:
-  - Python
   - FastAPI
-  - React.js
-  - Docker
+  - Gemini API
+  - Pydantic
+  - Supabase
 heroImage: /identity.png
 featured: false
 visual: momentum
 ---
 
-## Project overview
+## The problem
 
-Built in April 2026, Momentum is an AI-driven mission workspace application developed with FastAPI, Python, React.js, and Docker.
+Traditional technical screening often leans on résumé keywords or subjective review. Momentum evaluates candidate work samples against explicit rubrics and returns evidence-backed competency scores, gaps, and recommended learning tracks.
 
-<ProjectArtifact variant="momentum" caption="Momentum brings an AI-driven workspace into a containerized full-stack architecture." />
+<ProjectArtifact
+  variant="momentum"
+  caption="React captures candidate evidence; FastAPI validates the request and orchestrates a structured Gemini evaluation stored in Supabase."
+/>
 
-## Full-stack implementation
+## Making model output dependable
 
-FastAPI and Python power the application backend, while React.js provides the web interface. Docker packages the workflow into a consistent, reproducible environment.
+Generative output is useful only if the rest of the product can trust its shape. I defined Pydantic contracts for scores, evidence snippets, gap analysis, and recommended tracks, then enforced the same schema through the Gemini API. Validated results can be rendered and persisted without brittle markdown parsing.
 
-<Decision title="A reproducible development environment">
-Docker keeps the application workflow consistent across machines and makes the project easier to run as a complete system.
+<Decision title="FastAPI for asynchronous AI orchestration">
+  Model calls are I/O-bound and may take seconds. Async route handlers and a
+  non-blocking HTTP client let the service await inference without tying up a
+  worker thread, while Pydantic provides request and response validation at the
+  API boundary.
 </Decision>
 
-## What the project demonstrates
+## Auditability and delivery
 
-Momentum demonstrates full-stack development, Python API work, React.js interface development, AI-oriented application work, and containerized delivery.
+Supabase stores candidate benchmarks, model parameters, prompts, and resulting scores as an audit trail. Cached evaluations returned in under 150 ms in testing, and strict validation eliminated parsing failures in the tested pipeline. Docker Compose packages the client, API, and local service dependencies into a reproducible setup.

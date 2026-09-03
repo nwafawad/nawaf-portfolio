@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
-import { MDXRemote } from 'next-mdx-remote/rsc';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { ProjectVisual } from '@/components/project-visual';
@@ -76,6 +75,96 @@ function Decision({
   );
 }
 
+function renderInline(text: string) {
+  return text
+    .split(/(`[^`]+`)/g)
+    .map((part, index) =>
+      part.startsWith('`') && part.endsWith('`') ? (
+        <code key={`${part}-${index}`}>{part.slice(1, -1)}</code>
+      ) : (
+        part
+      ),
+    );
+}
+
+function ProjectContent({ source }: { source: string }) {
+  const lines = source.trim().split('\n');
+  const blocks: React.ReactNode[] = [];
+
+  for (let index = 0; index < lines.length;) {
+    const line = lines[index].trim();
+
+    if (!line) {
+      index += 1;
+      continue;
+    }
+
+    if (line.startsWith('## ')) {
+      blocks.push(<h2 key={`heading-${index}`}>{line.slice(3)}</h2>);
+      index += 1;
+      continue;
+    }
+
+    const artifactMatch = line.match(
+      /^<ProjectArtifact variant="([^"]+)" caption="([^"]+)" \/>$/,
+    );
+
+    if (artifactMatch) {
+      blocks.push(
+        <ProjectArtifact
+          key={`artifact-${index}`}
+          variant={artifactMatch[1] as ProjectVisualVariant}
+          caption={artifactMatch[2]}
+        />,
+      );
+      index += 1;
+      continue;
+    }
+
+    const decisionMatch = line.match(/^<Decision title="([^"]+)">$/);
+
+    if (decisionMatch) {
+      const body: string[] = [];
+      index += 1;
+
+      while (index < lines.length && lines[index].trim() !== '</Decision>') {
+        if (lines[index].trim()) body.push(lines[index].trim());
+        index += 1;
+      }
+
+      blocks.push(
+        <Decision key={`decision-${index}`} title={decisionMatch[1]}>
+          <p>{renderInline(body.join(' '))}</p>
+        </Decision>,
+      );
+      index += 1;
+      continue;
+    }
+
+    const paragraph = [line];
+    index += 1;
+
+    while (index < lines.length && lines[index].trim()) {
+      const nextLine = lines[index].trim();
+      if (
+        nextLine.startsWith('## ') ||
+        nextLine.startsWith('<ProjectArtifact') ||
+        nextLine.startsWith('<Decision')
+      ) {
+        break;
+      }
+      paragraph.push(nextLine);
+      index += 1;
+    }
+
+    blocks.push(
+      <p key={`paragraph-${index}`}>{renderInline(paragraph.join(' '))}</p>,
+    );
+  }
+
+  return blocks;
+}
+
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
   const project = getProjectBySlug(slug);
@@ -117,15 +206,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </dl>
         </section>
 
-        <section className="case-visual-shell shell" aria-label={`${project.title} project artifact`}>
+        <section
+          className="case-visual-shell shell"
+          aria-label={`${project.title} project artifact`}
+        >
           <ProjectVisual variant={project.visual} />
         </section>
 
         <article className="case-body shell">
-          <MDXRemote
-            source={project.content}
-            components={{ ProjectArtifact, Decision }}
-          />
+          <ProjectContent source={project.content} />
         </article>
 
         <nav className="next-project shell" aria-label="Next project">

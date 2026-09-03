@@ -40,9 +40,18 @@ export function ProjectVisual({
             <span>AI-assisted workspace</span>
           </div>
           <div className="momentum-list">
-            <div><span>Mission context</span><i /></div>
-            <div><span>Next action</span><i /></div>
-            <div><span>Workspace state</span><i /></div>
+            <div>
+              <span>Mission context</span>
+              <i />
+            </div>
+            <div>
+              <span>Next action</span>
+              <i />
+            </div>
+            <div>
+              <span>Workspace state</span>
+              <i />
+            </div>
           </div>
         </div>
       )}
@@ -65,6 +74,30 @@ export function ProjectVisual({
             <span>Git</span>
             <span>Documentation</span>
           </div>
+        </div>
+      )}
+      {variant === 'asala' && (
+        <div className="asala-ui">
+          <span className="visual-label">ASALA HUB / OFFLINE SYNC</span>
+          <div className="asala-status">
+            <strong>Offline ready</strong>
+            <span>15 chapters · &lt; 8 MB</span>
+          </div>
+          <div className="asala-queue">
+            <div>
+              <span>Lesson cache</span>
+              <strong>Available</strong>
+            </div>
+            <div>
+              <span>Quiz submission</span>
+              <strong>Pending sync</strong>
+            </div>
+            <div>
+              <span>Connection restored</span>
+              <strong>Auto-flush</strong>
+            </div>
+          </div>
+          <p>IndexedDB → sync queue → FastAPI</p>
         </div>
       )}
     </div>

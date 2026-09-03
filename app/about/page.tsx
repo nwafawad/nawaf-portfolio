@@ -7,19 +7,19 @@ import { SiteHeader } from '@/components/site-header';
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'About Nawaf Ahmed, a Software Engineering student at African Leadership University with full-stack development experience.',
+    'About Nawaf Ahmed, a systems-focused Software Engineering student building resilient APIs, data platforms, and offline-first products.',
 };
 
 const experience = [
   {
     number: '01',
     title: 'Software Development Intern',
-    copy: 'Elevanda Ventures, Kigali · Apr 2026 - Present. Designing relational schemas and secure REST APIs, containerizing workflows with Docker, and collaborating through Git.',
+    copy: 'Elevanda Ventures, Kigali · Apr 2026 - Present. Designing normalized PostgreSQL schemas, secure typed REST APIs, and reproducible Docker workflows in a cross-functional team.',
   },
   {
     number: '02',
-    title: 'Bachelor of Software Engineering',
-    copy: 'African Leadership University, Kigali · Expected May 2028 · Second Upper academic standing. Coursework includes enterprise web development, web infrastructure, Linux, Python, and databases.',
+    title: 'BSc (Hons) Software Engineering',
+    copy: 'African Leadership University, Kigali · Expected May 2028 · Second Upper standing. 320 of 480 credits completed or in progress across software engineering, mobile development, web infrastructure, Linux, Python, and databases.',
   },
   {
     number: '03',
@@ -44,18 +44,19 @@ export default function AboutPage() {
               <ArrowLeft aria-hidden="true" /> Back to work
             </Link>
             <p className="eyebrow">About / Nawaf Ahmed</p>
-            <h1>I build across the stack.</h1>
+            <h1>I engineer for resilience.</h1>
           </div>
           <div className="about-intro">
             <p>
-              I&apos;m a Software Engineering student with hands-on experience
-              building full-stack, data-driven applications using modern
-              frameworks and tools.
+              I&apos;m a systems-focused Software Engineering student building
+              reliable APIs, relational data platforms, and AI-enabled products
+              with Python, TypeScript, PostgreSQL, and Docker.
             </p>
             <p>
-              I&apos;m comfortable designing databases, building APIs, and working
-              across the stack in collaborative environments. I&apos;m fluent in
-              English and Arabic and quick to learn new tools and technologies.
+              Raised in Sudan and based in Rwanda, I design for the conditions
+              people actually face: unstable connectivity, costly bandwidth, and
+              workflows where data integrity cannot be optional. I&apos;m fluent
+              in English and Arabic.
             </p>
           </div>
         </section>
@@ -66,19 +67,22 @@ export default function AboutPage() {
             <strong>Kigali, Rwanda</strong>
           </div>
           <div>
-            <span>Degree</span>
-            <strong>BSc Software Engineering</strong>
+            <span>Current level</span>
+            <strong>Year 2 · Trimester 6</strong>
           </div>
           <div>
-            <span>Graduation</span>
-            <strong>Expected May 2028</strong>
+            <span>Academic progress</span>
+            <strong>320 / 480 credits</strong>
           </div>
         </section>
 
-        <section className="principles shell" aria-labelledby="experience-title">
+        <section
+          className="principles shell"
+          aria-labelledby="experience-title"
+        >
           <header>
             <p className="eyebrow">Experience &amp; education</p>
-            <h2 id="experience-title">Learning by building.</h2>
+            <h2 id="experience-title">Practice, grounded in purpose.</h2>
           </header>
           <div className="principle-list">
             {experience.map((item) => (
@@ -91,16 +95,21 @@ export default function AboutPage() {
           </div>
         </section>
 
-        <section className="capabilities shell" aria-labelledby="capabilities-title">
+        <section
+          className="capabilities shell"
+          aria-labelledby="capabilities-title"
+        >
           <p className="eyebrow">Technical toolkit</p>
           <div>
             <h2 id="capabilities-title">
-              FastAPI, React.js, Python, Node.js, databases, Docker, and Git.
+              Python, TypeScript, FastAPI, PostgreSQL, React, and Docker.
             </h2>
             <p>
-              Also experienced with Express.js, Prisma ORM, MySQL/PostgreSQL,
-              SQLAlchemy, Linux and shell scripting, computer networks, and the
-              Microsoft Office suite.
+              I also work with Express.js, Node.js, Prisma, SQLAlchemy,
+              Supabase, Dexie.js, service workers, Linux, Nginx, HAProxy,
+              systemd, GitHub Actions, pytest, and Jest. My focus is the
+              boundary between reliable backend systems and useful product
+              experiences.
             </p>
           </div>
         </section>

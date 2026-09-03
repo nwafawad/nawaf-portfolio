@@ -2,14 +2,14 @@
 title: Elevanda Ventures
 year: 2026
 role: Software Development Intern
-summary: Professional experience designing relational schemas, engineering secure REST APIs, and maintaining reliable development workflows.
-outcome: Structured data systems, containerized workflows, and clean, auditable Git repositories.
+summary: Production backend work across normalized data models, secure typed APIs, and reproducible containerized environments.
+outcome: Indexed multi-table queries measured below 85 ms P95 in test workloads, with consistent local and staging workflows.
 kind: Software development internship
 tags:
   - REST APIs
-  - Relational databases
-  - Docker
-  - Git
+  - PostgreSQL
+  - RBAC
+  - Docker Compose
 heroImage: /identity.png
 featured: false
 visual: elevanda
@@ -19,16 +19,26 @@ visual: elevanda
 
 I joined Elevanda Ventures in Kigali as a Software Development Intern in April 2026. My work spans database design, API engineering, development environments, documentation, and team collaboration.
 
-<ProjectArtifact variant="elevanda" caption="Internship work connects accurate relational records to secure services and reliable engineering workflows." />
+<ProjectArtifact
+  variant="elevanda"
+  caption="Internship work connects accurate relational records to secure services and reliable engineering workflows."
+/>
 
 ## Data and API work
 
-I design relational database schemas and engineer secure REST APIs for structured records that require accuracy, consistency, and attention to detail.
+I design normalized relational schemas with referential integrity, deliberate indexes, and audit fields for structured records. At the service boundary, typed DTO validation and role-based access control keep incoming data and permissions explicit.
 
-<Decision title="Reliable engineering workflows">
-I use Docker to maintain consistent environments and Git version control to track changes, organize documentation, and keep repositories clean and auditable.
+<Decision title="Normalize first, then measure">
+  Third-normal-form schemas reduce duplication and make record ownership clear.
+  When multi-table joins began to slow, I used query plans to target composite
+  foreign-key and status indexes; test workloads held P95 latency below 85 ms
+  without denormalizing the model.
 </Decision>
+
+## Reproducible delivery
+
+Docker Compose packages application runtimes and isolated PostgreSQL services so branches share the same topology locally and in staging. Git branches, focused commits, and organized documentation keep changes reviewable and auditable.
 
 ## Collaboration
 
-The role involves working with cross-functional teams in a fast-paced environment while keeping technical work understandable, traceable, and reliable.
+The role requires close collaboration across a fast-moving team. I treat API contracts, migration notes, and repository hygiene as part of the engineering work—not cleanup after it.

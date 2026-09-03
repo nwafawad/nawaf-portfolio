@@ -1,4 +1,4 @@
-export type ProjectVisualVariant = 'recyx' | 'momentum' | 'elevanda';
+export type ProjectVisualVariant = 'recyx' | 'momentum' | 'elevanda' | 'asala';
 
 export interface Project {
   title: string;
@@ -47,7 +47,8 @@ function parseFrontmatter(source: string) {
       data[key] = [];
       activeList = key;
     } else {
-      data[key] = rawValue === 'true' ? true : rawValue === 'false' ? false : rawValue;
+      data[key] =
+        rawValue === 'true' ? true : rawValue === 'false' ? false : rawValue;
       activeList = null;
     }
   }
