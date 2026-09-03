@@ -206,6 +206,27 @@ export default function AboutPage() {
             <a href="/resume.pdf" download>
               Download résumé <Download aria-hidden="true" />
             </a>
+            <a
+              href="https://github.com/nwafawad"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub / nwafawad <ArrowUpRight aria-hidden="true" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/nawaf-ahmed-876101215/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn / Nawaf Ahmed <ArrowUpRight aria-hidden="true" />
+            </a>
+            <a
+              href="https://www.instagram.com/nwafawad/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Instagram / @nwafawad <ArrowUpRight aria-hidden="true" />
+            </a>
           </div>
         </section>
       </main>

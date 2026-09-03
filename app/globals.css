@@ -996,7 +996,18 @@ a {
 
 .footer-grid div {
   display: flex;
-  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px 18px;
+}
+
+.footer-grid a {
+  transition: color 160ms ease;
+}
+
+.footer-grid a:hover,
+.footer-grid a:focus-visible {
+  color: var(--red);
 }
 
 .back-link {
@@ -1798,6 +1809,10 @@ a {
 
   .footer-grid {
     gap: 12px;
+  }
+
+  .footer-grid div {
+    justify-content: flex-start;
   }
 
   .about-hero {
