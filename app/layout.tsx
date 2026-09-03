@@ -8,7 +8,7 @@ const geist = Geist({
 });
 
 const description =
-  'Nawaf Ahmed is a product designer focused on clear systems, useful interactions, and work that is ready to ship.';
+  'Nawaf Ahmed is a Software Engineering student building full-stack, data-driven applications with Python, FastAPI, React.js, PostgreSQL, and Docker.';
 const siteUrl = new URL(
   'https://nawaf-ahmed-portfolio.n-ahmed359377.chatgpt.site',
 );
@@ -19,15 +19,15 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   title: {
-    default: 'Nawaf Ahmed — Product Designer',
+    default: 'Nawaf Ahmed — Software Engineering Student',
     template: '%s — Nawaf Ahmed',
   },
   description,
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    siteName: 'Nawaf Ahmed — Product Designer',
-    title: 'Nawaf Ahmed — Product Designer',
+    siteName: 'Nawaf Ahmed — Software Engineering Student',
+    title: 'Nawaf Ahmed — Software Engineering Student',
     description,
     images: [
       {
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Nawaf Ahmed — Product Designer',
+    title: 'Nawaf Ahmed — Software Engineering Student',
     description,
     images: ['/og.png'],
   },

@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft, ArrowUpRight, Download } from 'lucide-react';
 import { SiteFooter } from '@/components/site-footer';
@@ -8,24 +7,29 @@ import { SiteHeader } from '@/components/site-header';
 export const metadata: Metadata = {
   title: 'About',
   description:
-    'Nawaf Ahmed’s product design approach: frame the decision, expose the system, and carry the details through.',
+    'About Nawaf Ahmed, a Software Engineering student at African Leadership University with full-stack development experience.',
 };
 
-const principles = [
+const experience = [
   {
     number: '01',
-    title: 'Frame the decision',
-    copy: 'A clear product direction begins with the decision a person needs to make—not the screen a team has been asked to draw.',
+    title: 'Software Development Intern',
+    copy: 'Elevanda Ventures, Kigali · Apr 2026 - Present. Designing relational schemas and secure REST APIs, containerizing workflows with Docker, and collaborating through Git.',
   },
   {
     number: '02',
-    title: 'Expose the system',
-    copy: 'Interfaces become trustworthy when their states, ownership, and consequences are understandable rather than merely tidy.',
+    title: 'Bachelor of Software Engineering',
+    copy: 'African Leadership University, Kigali · Expected May 2028 · Second Upper academic standing. Coursework includes enterprise web development, web infrastructure, Linux, Python, and databases.',
   },
   {
     number: '03',
-    title: 'Carry the details through',
-    copy: 'The final mile matters: language, edge cases, responsive behavior, and the rules that keep a product coherent after launch.',
+    title: 'SoCreative Certified Graduate',
+    copy: 'British Council and ALU School of Business · Mar 2025. Completed a program in entrepreneurship and business fundamentals.',
+  },
+  {
+    number: '04',
+    title: 'Community Volunteer',
+    copy: 'Portive Youth, Port Sudan · Jun 2025. Worked with a diverse youth community in a cultural arts hub to plan and drive public engagement initiatives.',
   },
 ];
 
@@ -40,57 +44,63 @@ export default function AboutPage() {
               <ArrowLeft aria-hidden="true" /> Back to work
             </Link>
             <p className="eyebrow">About / Nawaf Ahmed</p>
-            <h1>I design the logic people feel.</h1>
+            <h1>I build across the stack.</h1>
           </div>
           <div className="about-intro">
             <p>
-              Product design is often described through screens. I&apos;m more
-              interested in what connects them: the decisions, states, language,
-              and operating rules that make a product understandable.
+              I&apos;m a Software Engineering student with hands-on experience
+              building full-stack, data-driven applications using modern
+              frameworks and tools.
             </p>
             <p>
-              My approach moves from framing to structure to interaction, with a
-              bias toward prototypes that make tradeoffs concrete early.
+              I&apos;m comfortable designing databases, building APIs, and working
+              across the stack in collaborative environments. I&apos;m fluent in
+              English and Arabic and quick to learn new tools and technologies.
             </p>
           </div>
         </section>
 
-        <section className="about-image shell" aria-label="Portfolio identity">
-          <Image
-            src="/identity.png"
-            alt="Nawaf’s modular portfolio identity in warm paper, black, red, and blue"
-            width={1536}
-            height={864}
-            sizes="(max-width: 900px) 100vw, 90vw"
-          />
+        <section className="about-facts shell" aria-label="Profile details">
+          <div>
+            <span>Based in</span>
+            <strong>Kigali, Rwanda</strong>
+          </div>
+          <div>
+            <span>Degree</span>
+            <strong>BSc Software Engineering</strong>
+          </div>
+          <div>
+            <span>Graduation</span>
+            <strong>Expected May 2028</strong>
+          </div>
         </section>
 
-        <section className="principles shell" aria-labelledby="principles-title">
+        <section className="principles shell" aria-labelledby="experience-title">
           <header>
-            <p className="eyebrow">Working principles</p>
-            <h2 id="principles-title">A practical point of view.</h2>
+            <p className="eyebrow">Experience &amp; education</p>
+            <h2 id="experience-title">Learning by building.</h2>
           </header>
           <div className="principle-list">
-            {principles.map((principle) => (
-              <article key={principle.number}>
-                <span>{principle.number}</span>
-                <h3>{principle.title}</h3>
-                <p>{principle.copy}</p>
+            {experience.map((item) => (
+              <article key={item.number}>
+                <span>{item.number}</span>
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
               </article>
             ))}
           </div>
         </section>
 
         <section className="capabilities shell" aria-labelledby="capabilities-title">
-          <p className="eyebrow">Capabilities</p>
+          <p className="eyebrow">Technical toolkit</p>
           <div>
             <h2 id="capabilities-title">
-              Product strategy, interaction design, systems, and prototyping.
+              FastAPI, React.js, Python, Node.js, databases, Docker, and Git.
             </h2>
             <p>
-              The portfolio currently uses independent concept studies while
-              verified project details are prepared. No client names or outcomes
-              have been invented.
+              Also experienced with Express.js, Prisma ORM, MySQL/PostgreSQL,
+              SQLAlchemy, Linux and shell scripting, computer networks, and the
+              Microsoft Office suite.
             </p>
           </div>
         </section>
@@ -98,11 +108,11 @@ export default function AboutPage() {
         <section className="about-contact shell" id="contact">
           <div>
             <p className="eyebrow">Let&apos;s talk</p>
-            <h2>Bring the complicated problem.</h2>
+            <h2>Let&apos;s build something useful.</h2>
           </div>
           <div className="about-contact-actions">
-            <a href="mailto:n.ahmed@alustudent.com">
-              n.ahmed@alustudent.com <ArrowUpRight aria-hidden="true" />
+            <a href="mailto:nwafawad49@gmail.com">
+              nwafawad49@gmail.com <ArrowUpRight aria-hidden="true" />
             </a>
             <a href="/resume.pdf" download>
               Download résumé <Download aria-hidden="true" />

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowDown, ArrowUpRight, Download } from 'lucide-react';
 import { SiteFooter } from '@/components/site-footer';
@@ -16,22 +15,22 @@ export default function Home() {
         <section className="hero shell" aria-labelledby="hero-title">
           <div className="hero-copy">
             <div className="eyebrow-row">
-              <p className="eyebrow">Product designer</p>
+              <p className="eyebrow">Software engineering student</p>
               <span className="availability">
-                <span aria-hidden="true" /> Open to the right team
+                <span aria-hidden="true" /> Kigali, Rwanda
               </span>
             </div>
 
             <h1 id="hero-title">
-              Complex products.
+              Full-stack systems.
               <br />
-              <span>Clear decisions.</span>
+              <span>Built end to end.</span>
             </h1>
 
             <p className="hero-intro">
-              I&apos;m Nawaf Ahmed. I shape digital products around the decisions
-              people actually need to make—then carry the details through to a
-              shippable system.
+              I&apos;m Nawaf Ahmed, a Software Engineering student at African
+              Leadership University. I build full-stack, data-driven applications
+              across databases, APIs, and modern web interfaces.
             </p>
 
             <div className="hero-actions" aria-label="Primary actions">
@@ -40,40 +39,60 @@ export default function Home() {
               </a>
               <a
                 className="action-link action-link-secondary"
-                href="mailto:n.ahmed@alustudent.com"
+                href="mailto:nwafawad49@gmail.com"
               >
                 Start a conversation <ArrowUpRight aria-hidden="true" />
               </a>
             </div>
 
-            <dl className="proof-strip" aria-label="Design approach">
+            <dl className="proof-strip" aria-label="Engineering strengths">
               <div>
                 <dt>01</dt>
-                <dd>Systems-minded</dd>
+                <dd>API design</dd>
               </div>
               <div>
                 <dt>02</dt>
-                <dd>Evidence-led</dd>
+                <dd>Data modeling</dd>
               </div>
               <div>
                 <dt>03</dt>
-                <dd>Built to ship</dd>
+                <dd>Full-stack delivery</dd>
               </div>
             </dl>
           </div>
 
-          <figure className="hero-art">
-            <Image
-              src="/identity.png"
-              alt="Nawaf portfolio identity: a modular editorial grid suggesting product systems"
-              width={1536}
-              height={864}
-              priority
-              sizes="(max-width: 900px) 100vw, 46vw"
-            />
+          <figure className="hero-art hero-system">
+            <div className="system-window" aria-label="Full-stack application architecture">
+              <div className="system-window-bar">
+                <span />
+                <span />
+                <span />
+                <strong>FULL-STACK / 2026</strong>
+              </div>
+              <div className="system-stack">
+                <div>
+                  <small>INTERFACE</small>
+                  <strong>React.js</strong>
+                  <span>Responsive web application</span>
+                </div>
+                <i aria-hidden="true">↓</i>
+                <div>
+                  <small>API</small>
+                  <strong>FastAPI</strong>
+                  <span>Python services</span>
+                </div>
+                <i aria-hidden="true">↓</i>
+                <div>
+                  <small>DATA</small>
+                  <strong>PostgreSQL</strong>
+                  <span>Relational models</span>
+                </div>
+              </div>
+              <p>Dockerized workflows · Git-based collaboration</p>
+            </div>
             <figcaption>
-              <span>Designing the signal</span>
-              <span>Removing the noise</span>
+              <span>Interface to infrastructure</span>
+              <span>One coherent system</span>
             </figcaption>
           </figure>
         </section>
@@ -81,10 +100,10 @@ export default function Home() {
         <section className="work-section shell" id="work" aria-labelledby="work-title">
           <header className="section-heading">
             <p className="eyebrow">Selected work / 2026</p>
-            <h2 id="work-title">Three studies in making complexity legible.</h2>
+            <h2 id="work-title">Products and systems I&apos;ve built.</h2>
             <p>
-              Concept work shown transparently while the final project archive is
-              being assembled.
+              Verified projects and professional experience from my current
+              résumé.
             </p>
           </header>
 
@@ -118,19 +137,19 @@ export default function Home() {
         </section>
 
         <section className="about-bridge shell" aria-labelledby="approach-title">
-          <p className="eyebrow">Point of view</p>
+          <p className="eyebrow">How I work</p>
           <div>
             <h2 id="approach-title">
-              Good product design is a sequence of well-framed decisions.
+              Comfortable across the stack. Curious at every layer.
             </h2>
             <div className="bridge-copy">
               <p>
-                I care about the connective tissue: the states between screens,
-                the language inside a workflow, and the system that keeps a good
-                idea coherent after launch.
+                I&apos;m comfortable designing relational databases, building secure
+                APIs, and connecting them to modern interfaces in collaborative,
+                fast-paced environments.
               </p>
               <Link className="text-link" href="/about">
-                More about my approach <ArrowUpRight aria-hidden="true" />
+                Experience, education &amp; skills <ArrowUpRight aria-hidden="true" />
               </Link>
             </div>
           </div>
@@ -138,15 +157,15 @@ export default function Home() {
 
         <section className="contact-panel shell" aria-labelledby="contact-title">
           <div>
-            <p className="eyebrow">A useful next step</p>
-            <h2 id="contact-title">Have a complex product problem?</h2>
+            <p className="eyebrow">Let&apos;s connect</p>
+            <h2 id="contact-title">Building something useful?</h2>
           </div>
           <p>
-            I&apos;m interested in product teams that value clear thinking, close
-            collaboration, and care in the final mile.
+            I&apos;m interested in software teams that value clean systems, thoughtful
+            collaboration, and continuous learning.
           </p>
           <div className="contact-actions">
-            <a className="action-link action-link-light" href="mailto:n.ahmed@alustudent.com">
+            <a className="action-link action-link-light" href="mailto:nwafawad49@gmail.com">
               Email Nawaf <ArrowUpRight aria-hidden="true" />
             </a>
             <a className="resume-link" href="/resume.pdf" download>

@@ -43,92 +43,192 @@ function text(value, x, y, size, options = {}) {
   commands.push(`BT /${font} ${size} Tf 1 0 0 1 ${x} ${y} Tm (${escapePdf(value)}) Tj ET`);
 }
 
+function lines(values, x, y, size, leading, options = {}) {
+  values.forEach((value, index) => text(value, x, y - index * leading, size, options));
+}
+
 function label(value, x, y, fill = colors.soft) {
   text(value.toUpperCase(), x, y, 7, { font: 'F2', fill });
 }
 
+function bullet(values, x, y, size = 7.7, leading = 11) {
+  rect(x, y + 2.5, 3, 3, colors.red);
+  lines(values, x + 10, y, size, leading, { fill: colors.ink });
+}
+
 rect(0, 0, pageWidth, pageHeight, colors.paper);
 
-const margin = 42;
-const sidebar = 154;
-const contentX = margin + sidebar + 34;
-const contentWidth = pageWidth - contentX - margin;
+const margin = 38;
+const sidebarWidth = 164;
+const contentX = margin + sidebarWidth + 30;
+const contentRight = pageWidth - margin;
 
-rect(margin, 640, sidebar, 160, colors.ink);
-text('NAWAF', margin + 17, 750, 31, { font: 'F2', fill: colors.light });
-text('AHMED', margin + 17, 714, 31, { font: 'F2', fill: colors.light });
-rect(margin + 17, 676, 70, 7, colors.red);
-text('PRODUCT DESIGNER', margin + 17, 655, 8, { font: 'F2', fill: colors.light });
+rect(margin, 48, sidebarWidth, 752, colors.ink);
+text('NAWAF', margin + 16, 757, 29, { font: 'F2', fill: colors.light });
+text('AHMED', margin + 16, 724, 29, { font: 'F2', fill: colors.light });
+rect(margin + 16, 696, 70, 6, colors.red);
+text('SOFTWARE ENGINEERING', margin + 16, 676, 7.4, { font: 'F2', fill: colors.light });
+text('STUDENT', margin + 16, 664, 7.4, { font: 'F2', fill: colors.light });
 
-label('Contact', margin, 600);
-text('n.ahmed@alustudent.com', margin, 578, 9, { fill: colors.ink });
+label('Contact', margin + 16, 622, colors.light);
+lines(
+  ['Kigali, Rwanda', '+250 795 335 300', 'nwafawad49@gmail.com'],
+  margin + 16,
+  598,
+  8.2,
+  17,
+  { fill: colors.light },
+);
 
-label('Focus', margin, 535);
-const focus = ['Product strategy', 'Interaction design', 'Design systems', 'Prototyping'];
-focus.forEach((item, index) => {
-  const y = 510 - index * 21;
-  rect(margin, y + 2, 4, 4, colors.red);
-  text(item, margin + 12, y, 9, { fill: colors.ink });
+label('Technical skills', margin + 16, 526, colors.light);
+lines(
+  [
+    'Python / FastAPI',
+    'React.js / Node.js',
+    'Express.js',
+    'PostgreSQL / MySQL',
+    'SQLAlchemy / Prisma',
+    'Docker / Git',
+    'Linux / Shell scripting',
+    'Computer networks',
+  ],
+  margin + 16,
+  501,
+  8.2,
+  17,
+  { fill: colors.light },
+);
+
+label('Languages', margin + 16, 338, colors.light);
+lines(['English - Fluent', 'Arabic - Fluent'], margin + 16, 314, 8.2, 17, {
+  fill: colors.light,
 });
 
-label('Approach', margin, 388);
-text('Systems-minded.', margin, 364, 9, { font: 'F2', fill: colors.ink });
-text('Evidence-led.', margin, 348, 9, { font: 'F2', fill: colors.ink });
-text('Built to ship.', margin, 332, 9, { font: 'F2', fill: colors.ink });
-
-label('Profile', contentX, 781);
-text('Complex products.', contentX, 744, 22, { font: 'F2', fill: colors.ink });
-text('Clear decisions.', contentX, 717, 22, { font: 'F2', fill: colors.red });
-text('I shape digital products around the decisions people', contentX, 685, 10, { fill: colors.ink });
-text('actually need to make, then carry the details through', contentX, 670, 10, { fill: colors.ink });
-text('to a coherent, shippable system.', contentX, 655, 10, { fill: colors.ink });
-
-rule(contentX, 620, pageWidth - margin, 620);
-label('Selected concept studies', contentX, 590);
-
-const projects = [
-  {
-    number: '01',
-    title: 'Relay',
-    y: 535,
-    color: colors.blue,
-    tags: 'WORKFLOW DESIGN / SYSTEMS THINKING',
-    lines: ['Turns scattered operational handoffs into one', 'calm, accountable workflow.'],
-  },
-  {
-    number: '02',
-    title: 'Ledger',
-    y: 421,
-    color: colors.red,
-    tags: 'INFORMATION ARCHITECTURE / B2B PRODUCT',
-    lines: ['Makes dense review queues legible before a user', 'opens a single record.'],
-  },
-  {
-    number: '03',
-    title: 'Wayfinder',
-    y: 307,
-    color: colors.blue,
-    tags: 'SERVICE DESIGN / INCLUSIVE DESIGN',
-    lines: ['Compares routes by confidence and effort, not', 'only arrival time.'],
-  },
-];
-
-projects.forEach((project) => {
-  rect(contentX, project.y, 30, 30, project.color);
-  text(project.number, contentX + 9, project.y + 11, 8, { font: 'F2', fill: colors.light });
-  text(project.title, contentX + 44, project.y + 16, 15, { font: 'F2', fill: colors.ink });
-  label(project.tags, contentX + 44, project.y - 1, colors.soft);
-  text(project.lines[0], contentX + 44, project.y - 24, 9, { fill: colors.ink });
-  text(project.lines[1], contentX + 44, project.y - 38, 9, { fill: colors.ink });
+label('Tools', margin + 16, 253, colors.light);
+lines(['Microsoft Word', 'Microsoft Excel', 'Microsoft PowerPoint'], margin + 16, 229, 8.2, 17, {
+  fill: colors.light,
 });
 
-rect(contentX, 71, contentWidth, 78, colors.blue);
-label('Portfolio resume / content note', contentX + 16, 125, colors.light);
-text('Replace this concept profile with verified experience,', contentX + 16, 104, 8, { fill: colors.light });
-text('education, and dates before external use.', contentX + 16, 91, 8, { fill: colors.light });
+label('Profile', contentX, 786);
+text('Full-stack systems.', contentX, 758, 19, { font: 'F2' });
+text('Built end to end.', contentX, 735, 19, { font: 'F2', fill: colors.red });
+lines(
+  [
+    'Software engineering student with hands-on experience building',
+    'full-stack, data-driven applications. Comfortable designing',
+    'databases, building APIs, and working across the stack in',
+    'collaborative, fast-paced environments.',
+  ],
+  contentX,
+  708,
+  8.4,
+  12,
+);
 
-label('Nawaf Ahmed / Portfolio overview', margin, 28);
-text('2026', pageWidth - margin - 18, 28, 7, { font: 'F2', fill: colors.soft });
+rule(contentX, 650, contentRight, 650);
+label('Education', contentX, 633);
+text('African Leadership University', contentX, 612, 10, { font: 'F2' });
+text('Bachelor of Software Engineering', contentX, 596, 8.6);
+text('Expected May 2028  |  Academic standing: Second Upper', contentX, 582, 7.8, {
+  fill: colors.soft,
+});
+lines(
+  [
+    'Coursework: Enterprise Web Development, Web Infrastructure,',
+    'Linux and IT Tools, Python Programming and Databases,',
+    'Foundations Project, and Skills Immersion I.',
+  ],
+  contentX,
+  562,
+  7.4,
+  10,
+  { fill: colors.soft },
+);
+
+rule(contentX, 520, contentRight, 520);
+label('Work experience', contentX, 503);
+text('Software Development Intern', contentX, 482, 10, { font: 'F2' });
+text('Elevanda Ventures  |  Kigali  |  Apr 2026 - Present', contentX, 467, 7.8, {
+  fill: colors.blue,
+  font: 'F2',
+});
+bullet(
+  ['Designed relational database schemas and engineered secure', 'REST APIs for accurate, consistent structured records.'],
+  contentX,
+  446,
+);
+bullet(
+  ['Used Docker to maintain consistent, reliable environments', 'across projects.'],
+  contentX,
+  416,
+);
+bullet(
+  ['Collaborated across teams with Git, organized documentation,', 'and clean, auditable repositories.'],
+  contentX,
+  386,
+);
+
+rule(contentX, 350, contentRight, 350);
+label('Projects', contentX, 333);
+text('RECYX', contentX, 311, 10, { font: 'F2' });
+text('Digital Transaction & Circular Economy Platform  |  Mar 2026', contentX + 44, 312, 7.3, {
+  fill: colors.blue,
+  font: 'F2',
+});
+lines(
+  [
+    'Full-stack platform built with FastAPI, React.js, PostgreSQL,',
+    'SQLAlchemy ORM, pytest, and Jest.',
+  ],
+  contentX,
+  294,
+  7.7,
+  11,
+);
+
+text('Momentum', contentX, 258, 10, { font: 'F2' });
+text('AI-Driven Mission Workspace  |  Apr 2026', contentX + 67, 259, 7.3, {
+  fill: colors.blue,
+  font: 'F2',
+});
+lines(
+  ['AI-driven workspace application built with FastAPI, Python,', 'React.js, and Docker.'],
+  contentX,
+  241,
+  7.7,
+  11,
+);
+
+rule(contentX, 205, contentRight, 205);
+label('Programs & community', contentX, 188);
+text('SoCreative Entrepreneurship Program', contentX, 167, 8.8, { font: 'F2' });
+lines(
+  [
+    'Certified graduate, British Council & ALU School of Business',
+    'Entrepreneurship and business fundamentals  |  Mar 2025',
+  ],
+  contentX,
+  153,
+  7.4,
+  10,
+  { fill: colors.soft },
+);
+
+text('Portive Youth', contentX, 119, 8.8, { font: 'F2' });
+lines(
+  [
+    'Community volunteer, cultural arts hub  |  Port Sudan  |  Jun 2025',
+    'Planned and supported public engagement initiatives.',
+  ],
+  contentX,
+  105,
+  7.4,
+  10,
+  { fill: colors.soft },
+);
+
+label('Nawaf Ahmed / Resume', margin, 25);
+text('2026', contentRight - 18, 25, 7, { font: 'F2', fill: colors.soft });
 
 const stream = commands.join('\n');
 const objects = [
@@ -138,7 +238,7 @@ const objects = [
   '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>',
   '<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>',
   `<< /Length ${Buffer.byteLength(stream, 'latin1')} >>\nstream\n${stream}\nendstream`,
-  '<< /Title (Nawaf Ahmed - Product Designer) /Author (Nawaf Ahmed) /Subject (Portfolio resume placeholder) >>',
+  '<< /Title (Nawaf Ahmed - Software Engineering Resume) /Author (Nawaf Ahmed) /Subject (Software engineering experience, education, projects, and skills) >>',
 ];
 
 let pdf = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n';

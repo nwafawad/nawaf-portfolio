@@ -1,7 +1,4 @@
-import fs from 'node:fs';
-import path from 'node:path';
-
-export type ProjectVisualVariant = 'relay' | 'ledger' | 'wayfinder';
+export type ProjectVisualVariant = 'recyx' | 'momentum' | 'elevanda';
 
 export interface Project {
   title: string;
@@ -18,7 +15,11 @@ export interface Project {
   content: string;
 }
 
-const projectsDirectory = path.join(process.cwd(), 'content/projects');
+const projectSources = import.meta.glob<string>('../content/projects/*.mdx', {
+  eager: true,
+  import: 'default',
+  query: '?raw',
+});
 
 type Frontmatter = Record<string, string | boolean | string[]>;
 
@@ -55,14 +56,18 @@ function parseFrontmatter(source: string) {
 }
 
 export function getProjectSlugs() {
-  return fs
-    .readdirSync(projectsDirectory)
-    .filter((file) => file.endsWith('.mdx'))
-    .map((file) => file.replace(/\.mdx$/, ''));
+  return Object.keys(projectSources).map((file) =>
+    file.replace('../content/projects/', '').replace(/\.mdx$/, ''),
+  );
 }
 
 export function getProjectBySlug(slug: string): Project {
-  const source = fs.readFileSync(path.join(projectsDirectory, `${slug}.mdx`), 'utf8');
+  const source = projectSources[`../content/projects/${slug}.mdx`];
+
+  if (!source) {
+    throw new Error(`Unknown project slug: ${slug}`);
+  }
+
   const { data, content } = parseFrontmatter(source);
 
   return {

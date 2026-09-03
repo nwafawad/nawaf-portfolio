@@ -69,7 +69,7 @@ function Decision({
 }) {
   return (
     <aside className="decision-callout">
-      <span>Design decision</span>
+      <span>Engineering detail</span>
       <h3>{title}</h3>
       <div>{children}</div>
     </aside>
@@ -117,7 +117,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </dl>
         </section>
 
-        <section className="case-visual-shell shell" aria-label={`${project.title} concept artifact`}>
+        <section className="case-visual-shell shell" aria-label={`${project.title} project artifact`}>
           <ProjectVisual variant={project.visual} />
         </section>
 
@@ -129,7 +129,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </article>
 
         <nav className="next-project shell" aria-label="Next project">
-          <span>Next study</span>
+          <span>Next entry</span>
           <Link href={`/work/${nextProject.slug}`}>
             <span>
               {nextProject.title}
@@ -140,8 +140,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </nav>
 
         <section className="case-contact shell">
-          <p>Interested in how I think?</p>
-          <a href="mailto:n.ahmed@alustudent.com">
+          <p>Interested in working together?</p>
+          <a href="mailto:nwafawad49@gmail.com">
             Start a conversation <ArrowUpRight aria-hidden="true" />
           </a>
         </section>

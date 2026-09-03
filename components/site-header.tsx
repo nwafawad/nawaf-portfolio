@@ -14,7 +14,7 @@ export function SiteHeader() {
           <a href="/resume.pdf" download>
             Résumé
           </a>
-          <a href="mailto:n.ahmed@alustudent.com">Email</a>
+          <a href="mailto:nwafawad49@gmail.com">Email</a>
         </nav>
       </div>
     </header>

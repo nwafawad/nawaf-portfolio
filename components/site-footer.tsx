@@ -5,10 +5,10 @@ export function SiteFooter() {
     <footer className="site-footer">
       <div className="shell footer-grid">
         <p>© {new Date().getFullYear()} Nawaf Ahmed</p>
-        <p>Product design · Systems · Shipped work</p>
+        <p>Software engineering · APIs · Full-stack systems</p>
         <div>
           <Link href="/about">About</Link>
-          <a href="mailto:n.ahmed@alustudent.com">Email</a>
+          <a href="mailto:nwafawad49@gmail.com">Email</a>
         </div>
       </div>
     </footer>
