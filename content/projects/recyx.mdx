@@ -1,45 +1,55 @@
 ---
 title: RECYX
 year: 2026
-role: Full-stack developer
-summary: A transaction-safe circular-economy marketplace designed to protect inventory and ledger integrity under concurrent claims.
-outcome: One successful claimant under a 50-request concurrency test, with financial routes covered above 92%.
-kind: Transaction platform
+role: Backend developer · Team project
+summary: A repair and recycling marketplace connecting device owners, technicians, recyclers, and buyers in Rwanda.
+outcome: FastAPI endpoints for authentication, listings, technicians, and transactions with explicit offer-status transitions.
+kind: Circular-economy marketplace
 tags:
   - FastAPI
-  - PostgreSQL
-  - Concurrency
-  - Ledger systems
+  - SQLAlchemy
+  - JWT authentication
+  - State machines
 heroImage: /identity.png
 featured: true
+displayOrder: 3
+repositoryUrls:
+  - https://github.com/nwafawad/foundationsproject
 visual: recyx
 ---
 
-## The problem
+## Repair, recycle, reconnect
 
-RECYX formalizes peer-to-peer exchanges of recyclable commodities. The difficult part was not the storefront; it was protecting inventory and account balances when multiple buyers tried to claim the same material at nearly the same time.
+Device owners need a way to find repair help or move unwanted equipment to someone who can reuse it. RECYX combines a marketplace, technician directory, and recycling-facility map for Rwanda, with separate workflows for citizens, technicians, recyclers, buyers, and administrators.
+
+This was a team project at African Leadership University. My documented contribution was backend development: FastAPI REST APIs, JWT authentication with refresh tokens, and routers for listings, technicians, and transactions. Frontend development, database design, deployment, testing, and outreach were shared across other team roles.
 
 <ProjectArtifact
   variant="recyx"
-  caption="A React client sends claims through FastAPI to an atomic PostgreSQL transaction and double-entry ledger."
+  caption="The React marketplace sends offers to FastAPI; the transaction service checks participants and permitted status transitions before saving through SQLAlchemy."
 />
 
-## Defending the invariant
+## An offer has a lifecycle
 
-The FastAPI transaction route uses SQLAlchemy and PostgreSQL at `READ COMMITTED` isolation. It locks the target commodity row with `SELECT ... FOR UPDATE`, validates the available balance and item state, writes the debit and credit pair, and changes the commodity to `CLAIMED` inside one short transaction.
+The transaction service checks that a listing is available and prevents buyers from making an offer on their own listing. Creating an offer records the buyer, seller, and price, then marks the listing as transacting.
 
-<Decision title="Pessimistic locking over optimistic retries">
-  Contention is concentrated on a single listing during a claim. Row-level
-  locking makes the database defend the invariant directly; competing requests
-  wait, then receive a clean conflict instead of racing through stale reads. The
-  trade-off is a lock held for the transaction, so external calls stay outside
-  that boundary.
+Status updates check that the caller is a party to the transaction. The workflow moves from `offer_received` to `offer_accepted`, then `in_transit` and `completed`, with cancellation available before completion.
+
+<Decision title="Put legal transitions in one place">
+  A central transition map defines which status changes the service permits.
+  Completed and cancelled transactions have no outgoing transitions, and invalid
+  changes receive a validation error. Keeping this rule in the service makes it
+  apply independently of which interface sends the request.
 </Decision>
 
-## Retry-safe transactions
+## Backend contribution
 
-Client submissions receive a unique transaction hash, making retries idempotent and preventing a dropped connection from creating a second balance deduction or reward.
+FastAPI handles the HTTP layer, Pydantic defines request and response shapes, and SQLAlchemy persists application records. JWT authentication and role checks support the different participant workflows. The repository provides SQLite for local development and documents PostgreSQL for deployment.
 
-## Evidence
+The broader React application brings these services together through listing discovery, technician search, moderation, and transaction history. That product context explains the API design while keeping my contribution distinct from the team's combined work.
 
-A pytest-asyncio test fired 50 requests at one commodity: one claim succeeded, 49 returned `409 Conflict`, and the ledger remained balanced. Critical financial and checkout routes reached more than 92% test coverage across pytest and Jest; local benchmarks averaged under 60 ms for transaction confirmation at 50 concurrent requests.
+## Evidence and limits
+
+The source includes the transaction service, its allowed-transition map, and tests targeting that map. The repository contribution section separately documents each team member's responsibilities.
+
+The published demo is described in the repository as an interface with demo data; full backend functionality requires local setup. The transaction service handles offer coordination and status tracking. Concurrent inventory reservation and payment settlement would require additional implementation and validation.

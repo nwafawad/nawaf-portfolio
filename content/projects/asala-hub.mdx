@@ -2,42 +2,52 @@
 title: Asala Hub
 year: 2026
 role: Full-stack developer
-summary: An offline-first learning platform that keeps lessons, notes, and assessments usable through network outages.
-outcome: Core reading and quiz flows work offline; a 15-chapter module fits in under 8 MB of local storage.
+summary: An offline-first learning platform where students keep working through network outages and educators manage courses, submissions, and grades.
+outcome: Cached learning materials, local assignment drafts, and a sync queue with explicit conflict and retry handling.
 kind: Offline-first learning platform
 tags:
   - Next.js
   - IndexedDB
-  - Service Workers
   - FastAPI
+  - PostgreSQL
 heroImage: /identity.png
 featured: true
+displayOrder: 1
+repositoryUrls:
+  - https://github.com/nwafawad/Asala_Hub
 visual: asala
 ---
 
-## The constraint
+## Learning through an outage
 
-Students in Sudan, Rwanda, and other low-connectivity regions lose access when learning products assume an uninterrupted network. Asala Hub treats offline use as the default operating condition, not a degraded afterthought.
+A lost connection should not mean lost work. Asala Hub brings course materials and assignment drafts into the browser so students can continue with cached content while offline. Educators use the same platform to author courses, manage assignments, and return grades.
 
 <ProjectArtifact
   variant="asala"
-  caption="Lessons and assessments live locally in IndexedDB; a deterministic queue reconciles pending work when connectivity returns."
+  caption="Course content and drafts live in IndexedDB; queued changes are sent to FastAPI when connectivity returns."
 />
 
-## Local-first learning
+## From local draft to shared record
 
-A service worker caches the application shell while Dexie.js provides a typed IndexedDB layer for lessons, notes, assessments, and pending submissions. Core reading and quiz flows remain available with no connection, and database work runs away from the main interaction path.
+The Next.js client uses Dexie to store courses, modules, submissions, and mutation logs in IndexedDB. A submission can remain local and pending while the connection is unavailable. The sync provider monitors connectivity, batches queued changes, and records which writes have been acknowledged by the server.
 
-<Decision title="Last-write-wins over a CRDT">
-  Quiz submissions and reading markers are append-only or single-author in this
-  domain. Timestamp-based last-write-wins keeps the sync model deterministic
-  without adding the bundle size and memory overhead of a CRDT library. The
-  known trade-off is concurrent edits across multiple devices, mitigated by
-  limiting active sessions per student.
+Failed requests use a backoff schedule rather than a continuous retry loop. Pending and failed states stay visible in the queue, giving students a way to distinguish saved local work from work that has reached the server.
+
+<Decision title="Make reconciliation explicit">
+  A reconnect can bring duplicate requests, stale edits, and older client payloads.
+  The sync service checks transaction identifiers and schema versions before
+  processing changes. Submission reconciliation can combine compatible text
+  additions or reject conflicting edits; grade changes follow educator permission
+  checks. These cases need different responses, rather than a blanket
+  last-write-wins rule.
 </Decision>
 
-## Recovery and bandwidth
+## Across the stack
 
-The sync engine watches connectivity, batches pending mutations, and sends them to a FastAPI endpoint in dependency order. Successful writes move from `PENDING_SYNC` to `SYNCED`; stale edits resolve against the server timestamp.
+This full-stack project connects a Next.js and TypeScript interface to a FastAPI service and PostgreSQL database. The engineering focus is the boundary between local state and shared records: typed mutation payloads, server acknowledgements, and recovery when a batch cannot complete. Student, educator, and administrator views give each role its own workflow.
 
-Gemini-generated lesson summaries are cached as lightweight review cards. In the tested content set, this reduced downstream payloads by up to 80%, while all 15 chapters in a term occupied less than 8 MB of local storage.
+## Evidence and limits
+
+The repository's sync tests target repeated submission requests, compressed payloads, compatible text merges, conflicting edits, and grade permissions. The sync provider and service show how those cases connect to the student workflow.
+
+Offline access depends on content already available on the device. Drafts and queued changes remain in that browser's storage, and conflicts can require attention before synchronization completes. Acknowledgement from the server remains distinct from saving a local draft.

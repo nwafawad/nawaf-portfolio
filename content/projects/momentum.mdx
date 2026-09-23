@@ -2,39 +2,55 @@
 title: Momentum
 year: 2026
 role: Full-stack developer
-summary: An AI skill-intelligence workspace that turns candidate evidence into structured, auditable competency assessments.
-outcome: Schema-constrained evaluations with zero parsing failures in the tested pipeline and cached responses under 150 ms.
-kind: AI assessment platform
+summary: A personal learning workspace that turns reviewed activities and reflections into AI-assisted skill summaries and possible next directions.
+outcome: A review step for imported activities, structured learning insights, and feedback that lets learners correct their profiles.
+kind: Personal learning intelligence
 tags:
-  - FastAPI
-  - Gemini API
-  - Pydantic
-  - Supabase
+  - Next.js
+  - Express
+  - Prisma / PostgreSQL
+  - Gemini
 heroImage: /identity.png
-featured: false
+featured: true
+displayOrder: 2
+repositoryUrls:
+  - https://github.com/nwafawad/himma
 visual: momentum
 ---
 
-## The problem
+## Connecting scattered learning
 
-Traditional technical screening often leans on résumé keywords or subjective review. Momentum evaluates candidate work samples against explicit rubrics and returns evidence-backed competency scores, gaps, and recommended learning tracks.
+Reading articles, following courses, and exploring repositories can produce a fragmented record of learning. Momentum, published in the Himma repository, brings activities and reflections into one workspace and uses them to suggest skill themes and learning directions.
+
+The product supports personal reflection. A record of reading or an AI-generated summary is not proof of competence, and the learner needs a way to review and correct what the system infers.
 
 <ProjectArtifact
   variant="momentum"
-  caption="React captures candidate evidence; FastAPI validates the request and orchestrates a structured Gemini evaluation stored in Supabase."
+  caption="Imported activities pass through review before joining the learning record; Gemini insights and learner feedback help interpret that record."
 />
 
-## Making model output dependable
+## Review before import
 
-Generative output is useful only if the rest of the product can trust its shape. I defined Pydantic contracts for scores, evidence snippets, gap analysis, and recommended tracks, then enforced the same schema through the Gemini API. Validated results can be rendered and persisted without brittle markdown parsing.
+Browser-history imports and pasted URLs enter a staging queue. The import service normalizes URLs and checks for duplicates against saved activities, pending candidates, and the incoming batch. Candidates remain pending until the learner chooses what to include or reject.
 
-<Decision title="FastAPI for asynchronous AI orchestration">
-  Model calls are I/O-bound and may take seconds. Async route handlers and a
-  non-blocking HTTP client let the service await inference without tying up a
-  worker thread, while Pydantic provides request and response validation at the
-  API boundary.
+Confirmation uses a Prisma database transaction to create activity records and update candidate states together. This keeps the review step connected to the records it produces.
+
+<Decision title="Keep AI output structured and attributable">
+  The Gemini pipeline validates responses with Zod and checks that cited activity
+  identifiers belong to the supplied context. Invalid responses can trigger a
+  retry. A local heuristic path handles missing API configuration and quota
+  failures. This provides a fallback without treating every returned insight as
+  equally authoritative or as a verified assessment.
 </Decision>
 
-## Auditability and delivery
+## A full-stack learning workflow
 
-Supabase stores candidate benchmarks, model parameters, prompts, and resulting scores as an audit trail. Cached evaluations returned in under 150 ms in testing, and strict validation eliminated parsing failures in the tested pipeline. Docker Compose packages the client, API, and local service dependencies into a reproducible setup.
+The Next.js interface talks to an Express API written in TypeScript. Shared contracts define request shapes, while Prisma connects the services to PostgreSQL. The API saves insight runs and accepts learner feedback; corrections can update the learner's skills and target path.
+
+The engineering focus is the journey from captured activity to a useful reflection: a reviewable import queue, bounded AI context, structured responses, and an opportunity to correct the result.
+
+## Evidence and limits
+
+The repository contains the import-confirmation transaction, insight schema validation, citation checks, fallback generation, and profile-correction handling. These are implementation details that can be inspected through the source link above.
+
+Citation checks establish that an identifier belongs to the input set; they do not establish that a model's interpretation is accurate. Learning summaries remain suggestions for the learner to evaluate.

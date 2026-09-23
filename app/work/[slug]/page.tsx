@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
@@ -25,6 +26,7 @@ export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
+  if (!getProjectSlugs().includes(slug)) notFound();
   const project = getProjectBySlug(slug);
 
   return {
@@ -54,7 +56,7 @@ function ProjectArtifact({
   return (
     <figure className="case-artifact">
       <ProjectVisual variant={variant} />
-      <figcaption>{caption}</figcaption>
+      <figcaption>Schematic · {caption}</figcaption>
     </figure>
   );
 }
@@ -88,7 +90,15 @@ function renderInline(text: string) {
 }
 
 function ProjectContent({ source }: { source: string }) {
-  const lines = source.trim().split('\n');
+  // Content files format this component across multiple lines for readability.
+  // Normalize only the supported artifact syntax; do not evaluate arbitrary MDX.
+  const lines = source
+    .replace(
+      /<ProjectArtifact\s+variant="(recyx|momentum|asala)"\s+caption="([^"\r\n]+)"\s*\/>/g,
+      '<ProjectArtifact variant="$1" caption="$2" />',
+    )
+    .trim()
+    .split('\n');
   const blocks: React.ReactNode[] = [];
 
   for (let index = 0; index < lines.length;) {
@@ -167,6 +177,7 @@ function ProjectContent({ source }: { source: string }) {
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { slug } = await params;
+  if (!getProjectSlugs().includes(slug)) notFound();
   const project = getProjectBySlug(slug);
   const projects = getAllProjects();
   const currentIndex = projects.findIndex((item) => item.slug === slug);
@@ -204,14 +215,33 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <dd>{project.outcome}</dd>
             </div>
           </dl>
+          {project.repositoryUrls.length > 0 && (
+            <nav className="case-sources" aria-label={`${project.title} source code`}>
+              {project.repositoryUrls.map((url) => (
+                <a
+                  className="text-link"
+                  key={url}
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`View ${project.title} source on GitHub${project.repositoryUrls.length > 1 ? `: ${url.split('/').pop()}` : ''} (opens in a new tab)`}
+                >
+                  {project.repositoryUrls.length === 1
+                    ? 'View source on GitHub'
+                    : url.split('/').pop()}
+                  <ArrowUpRight aria-hidden="true" />
+                </a>
+              ))}
+            </nav>
+          )}
         </section>
 
-        <section
+        <figure
           className="case-visual-shell shell"
-          aria-label={`${project.title} project artifact`}
         >
           <ProjectVisual variant={project.visual} />
-        </section>
+          <figcaption>{project.title} · Workflow schematic, not a product screenshot.</figcaption>
+        </figure>
 
         <article className="case-body shell">
           <ProjectContent source={project.content} />

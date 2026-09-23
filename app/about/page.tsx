@@ -68,7 +68,7 @@ const foundationCourses = [
     summary:
       'Connected entrepreneurship with design thinking, systems thinking, and an ethical responsibility to consider equity, environmental cost, and long-term consequences.',
     practice:
-      'It shaped RECYX as an auditable circular-economy ledger and Asala Hub as a resource-conscious product designed around bandwidth, battery life, and affordable access.',
+      'It shaped RECYX as a repair and recycling marketplace and Asala Hub as a learning product designed for intermittent connectivity and local access to course materials.',
   },
   {
     number: '05',

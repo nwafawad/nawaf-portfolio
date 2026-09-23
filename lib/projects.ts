@@ -1,4 +1,4 @@
-export type ProjectVisualVariant = 'recyx' | 'momentum' | 'elevanda' | 'asala';
+export type ProjectVisualVariant = 'recyx' | 'momentum' | 'asala';
 
 export interface Project {
   title: string;
@@ -11,6 +11,8 @@ export interface Project {
   tags: string[];
   heroImage: string;
   featured: boolean;
+  repositoryUrls: string[];
+  displayOrder: number;
   visual: ProjectVisualVariant;
   content: string;
 }
@@ -82,6 +84,11 @@ export function getProjectBySlug(slug: string): Project {
     tags: Array.isArray(data.tags) ? data.tags : [],
     heroImage: String(data.heroImage ?? ''),
     featured: Boolean(data.featured),
+    repositoryUrls: Array.isArray(data.repositoryUrls) ? data.repositoryUrls : [],
+    displayOrder:
+      typeof data.displayOrder === 'string' && Number.isFinite(Number(data.displayOrder))
+        ? Number(data.displayOrder)
+        : Number.MAX_SAFE_INTEGER,
     visual: String(data.visual) as ProjectVisualVariant,
     content,
   };
@@ -90,5 +97,5 @@ export function getProjectBySlug(slug: string): Project {
 export function getAllProjects() {
   return getProjectSlugs()
     .map(getProjectBySlug)
-    .sort((a, b) => Number(b.featured) - Number(a.featured));
+    .sort((a, b) => a.displayOrder - b.displayOrder || a.slug.localeCompare(b.slug));
 }

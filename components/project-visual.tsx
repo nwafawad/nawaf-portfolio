@@ -16,63 +16,42 @@ export function ProjectVisual({
         <div className="recyx-ui">
           <span className="visual-label">RECYX / TRANSACTION FLOW</span>
           <div className="recyx-card recyx-card-main">
-            <span>React.js storefront</span>
-            <strong>Live</strong>
+            <span>Marketplace offer</span>
+            <strong>Received</strong>
           </div>
           <div className="recyx-flow" aria-hidden="true">
-            <span>Client</span>
+            <span>Accept</span>
             <i>→</i>
-            <span>API</span>
+            <span>Transit</span>
             <i>→</i>
-            <span>Data</span>
+            <span>Complete</span>
           </div>
           <div className="recyx-card">
             <span>FastAPI + SQLAlchemy</span>
-            <strong>Tested</strong>
+            <strong>Status rules</strong>
           </div>
         </div>
       )}
       {variant === 'momentum' && (
         <div className="momentum-ui">
-          <span className="visual-label">MOMENTUM / MISSION WORKSPACE</span>
+          <span className="visual-label">MOMENTUM / LEARNING INSIGHTS</span>
           <div className="momentum-head">
-            <strong>04</strong>
-            <span>AI-assisted workspace</span>
+            <strong>Learn</strong>
+            <span>Capture, reflect, review</span>
           </div>
           <div className="momentum-list">
             <div>
-              <span>Mission context</span>
+              <span>Review imported activities</span>
               <i />
             </div>
             <div>
-              <span>Next action</span>
+              <span>Explore skill summaries</span>
               <i />
             </div>
             <div>
-              <span>Workspace state</span>
+              <span>Correct your learning profile</span>
               <i />
             </div>
-          </div>
-        </div>
-      )}
-      {variant === 'elevanda' && (
-        <div className="elevanda-ui">
-          <span className="visual-label">ELEVANDA / API SYSTEMS</span>
-          <div className="schema-grid">
-            <div>
-              <small>RECORDS</small>
-              <strong>Relational schema</strong>
-            </div>
-            <i aria-hidden="true">↔</i>
-            <div>
-              <small>SERVICES</small>
-              <strong>Secure REST API</strong>
-            </div>
-          </div>
-          <div className="elevanda-footer">
-            <span>Docker</span>
-            <span>Git</span>
-            <span>Documentation</span>
           </div>
         </div>
       )}
@@ -81,7 +60,7 @@ export function ProjectVisual({
           <span className="visual-label">ASALA HUB / OFFLINE SYNC</span>
           <div className="asala-status">
             <strong>Offline ready</strong>
-            <span>15 chapters · &lt; 8 MB</span>
+            <span>Local drafts + cached courses</span>
           </div>
           <div className="asala-queue">
             <div>
@@ -89,17 +68,18 @@ export function ProjectVisual({
               <strong>Available</strong>
             </div>
             <div>
-              <span>Quiz submission</span>
+              <span>Assignment draft</span>
               <strong>Pending sync</strong>
             </div>
             <div>
               <span>Connection restored</span>
-              <strong>Auto-flush</strong>
+              <strong>Sync &amp; reconcile</strong>
             </div>
           </div>
           <p>IndexedDB → sync queue → FastAPI</p>
         </div>
       )}
+      <span className="visual-schematic">Workflow schematic</span>
     </div>
   );
 }

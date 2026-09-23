@@ -112,11 +112,12 @@ export default function Home() {
           aria-labelledby="work-title"
         >
           <header className="section-heading">
-            <p className="eyebrow">Selected work / 2026</p>
+            <p className="eyebrow">Selected work</p>
             <h2 id="work-title">Products and systems I&apos;ve built.</h2>
             <p>
-              Selected case studies spanning offline-first learning, transaction
-              integrity, structured AI, and production backend work.
+              Three case studies in offline learning, personal learning insights,
+              and a circular-economy marketplace—with source code and engineering
+              decisions behind each one.
             </p>
           </header>
 
